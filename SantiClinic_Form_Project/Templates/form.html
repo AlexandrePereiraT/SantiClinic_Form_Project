@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Survey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script>
+        function validateForm(event) {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            let valid = true;
+
+            radios.forEach(radio => {
+                const name = radio.name;
+                const checkedRadios = document.querySelectorAll(`input[name="${name}"]:checked`);
+
+                if (checkedRadios.length === 0) {
+                    valid = false;
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault();
+                alert('Please answer all questions before submitting.');
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="background-box">
+    <form action="{{ url_for('write_db') }}" onsubmit="validateForm(event)">
+        <div class="row">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='Images/SantiClinicLogo.jpg') }}" class="img-fluid" alt="Logo">
+            </div>
+            <div class="form-box" style="margin-top: 50px">
+                <label for="fname">Primeiro nome:</label><br>
+                <input type="text" id="fname" name="fname" required><br>
+                <label for="lname">Ultimo nome:</label><br>
+                <input type="text" id="lname" name="lname" required><br>
+                <label for="email">E-mail:</label><br>
+                <input type="email" id="email" name="email" required><br>
+            </div>
+            <div class="box">
+                <h1>1. No geral, o quão satisfeito está com a nossa empresa?</h1>
+                <div class="satisfaction-group">
+                    <div class="satisfaction-item">
+                        <input type="radio" id="very_satisfied" name="satisfaction" value="very_satisfied" required>
+                        <label for="very_satisfied">Muito Satisfeito</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="somewhat_satisfied" name="satisfaction" value="somewhat_satisfied">
+                        <label for="somewhat_satisfied">Satisfeito</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="neither" name="satisfaction" value="neither">
+                        <label for="neither">Neutro</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="somewhat_dissatisfied" name="satisfaction" value="somewhat_dissatisfied">
+                        <label for="somewhat_dissatisfied">Insatisfeito</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="very_dissatisfied" name="satisfaction" value="very_dissatisfied">
+                        <label for="very_dissatisfied">Muito insatisfeito</label>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <h1>2. Até que ponto os nossos serviços atendem às suas necessidades?</h1>
+                <div class="satisfaction-group">
+                    <div class="satisfaction-item">
+                        <input type="radio" id="extremely_well" name="needs" value="extremely_well" required>
+                        <label for="extremely_well">Muito bem</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="very_well" name="needs" value="very_well">
+                        <label for="very_well">Bem</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="somewhat_well" name="needs" value="somewhat_well">
+                        <label for="somewhat_well">Neutro</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="not_so_well" name="needs" value="not_so_well">
+                        <label for="not_so_well">Mal</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="not_at_all_well" name="needs" value="not_at_all_well">
+                        <label for="not_at_all_well">Muito mal</label>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <h1>3. Como avaliaria a qualidade dos nossos serviços?</h1>
+                <div class="satisfaction-group">
+                    <div class="satisfaction-item">
+                        <input type="radio" id="very_high" name="quality" value="very_high" required>
+                        <label for="very_high">Muito boa qualidade</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="high" name="quality" value="high">
+                        <label for="high">Boa qualidade</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="neither_quality" name="quality" value="neither_quality">
+                        <label for="neither_quality">Neutro</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="low" name="quality" value="low">
+                        <label for="low">Baixa qualidade</label>
+                    </div>
+                    <div class="satisfaction-item">
+                        <input type="radio" id="very_low" name="quality" value="very_low">
+                        <label for="very_low">Muito baixa qualidade</label>
+                    </div>
+                </div>
+            </div>
+            <div class="nps-box">
+                <h1>4. Qual a probabilidade de recomendar a nossa empresa a um amigo ou colega?</h1>
+                <div class="nps-scale">
+                    <div class="nps-labels">
+                        <label class="nps-label-left" for="nps-0">Pouco provável</label>
+                        <label class="nps-label-right" for="nps-10">Muito provável</label>
+                    </div>
+                    <div class="nps-options">
+                        <input type="radio" id="nps-0" name="recommend" value="0" required>
+                        <label for="nps-0">0</label>
+                        <input type="radio" id="nps-1" name="recommend" value="1">
+                        <label for="nps-1">1</label>
+                        <input type="radio" id="nps-2" name="recommend" value="2">
+                        <label for="nps-2">2</label>
+                        <input type="radio" id="nps-3" name="recommend" value="3">
+                        <label for="nps-3">3</label>
+                        <input type="radio" id="nps-4" name="recommend" value="4">
+                        <label for="nps-4">4</label>
+                        <input type="radio" id="nps-5" name="recommend" value="5">
+                        <label for="nps-5">5</label>
+                        <input type="radio" id="nps-6" name="recommend" value="6">
+                        <label for="nps-6">6</label>
+                        <input type="radio" id="nps-7" name="recommend" value="7">
+                        <label for="nps-7">7</label>
+                        <input type="radio" id="nps-8" name="recommend" value="8">
+                        <label for="nps-8">8</label>
+                        <input type="radio" id="nps-9" name="recommend" value="9">
+                        <label for="nps-9">9</label>
+                        <input type="radio" id="nps-10" name="recommend" value="10">
+                        <label for="nps-10">10</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <input type="submit" value="Submit" class="submit-button">
+        </div>
+    </form>
+</div>
+</body>
+</html>
